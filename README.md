@@ -3,7 +3,7 @@
 Every year [Games Done Quick](gamesdonequick.com) arranges two events, Awesome Games Done Quick (AGDQ) and Summer Games Done Quick (SGDQ).
 During AGDQ 2018 I saw the clock using a binary counter in the background and thought it would be a fun challenge to make. Enjoy!
 
-![Clock](/docs/out.gif)
+![Clock](/docs/clock.gif)
 
 ## Get started
 
