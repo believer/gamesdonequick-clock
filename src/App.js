@@ -1,3 +1,4 @@
+import Game from './Game'
 import React, { useReducer, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import ClockColumn from './ClockColumn'
@@ -19,7 +20,6 @@ const InnerWrapper = styled.div`
   border-right: 2px solid rgba(119, 206, 251, 0.8);
   box-shadow: 0 0 4px 2px rgba(119, 206, 251, 0.4),
     inset 0 0 4px 2px rgba(119, 206, 251, 0.2);
-  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 3px;
@@ -30,7 +30,7 @@ const InnerWrapper = styled.div`
 `
 
 const splitTime = (time, value = 0) =>
-  time > 10 ? time.toFixed().split('')[value] : value === 0 ? 0 : time
+  time >= 10 ? time.toFixed().split('')[value] : value === 0 ? 0 : time
 
 const Clock = () => {
   const [
@@ -81,6 +81,8 @@ const Clock = () => {
           <ClockColumn highlight={hundreths} />
         </InnerWrapper>
       </Wrapper>
+
+      <Game />
 
       <Buttons
         reset={resetClock}
