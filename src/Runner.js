@@ -19,7 +19,6 @@ const Runner = ({ runner, updateRunner }) => {
           border-right: 2px solid rgba(119, 206, 251, 0.8);
           box-shadow: 0 0 4px 2px rgba(119, 206, 251, 0.4),
             inset 0 0 4px 2px rgba(119, 206, 251, 0.2);
-          box-sizing: border-box;
           display: flex;
           justify-content: center;
           padding: 10px 0;
