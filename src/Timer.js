@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React from 'react'
+import styled from 'styled-components/macro'
 
 const TimerWrap = styled.div`
   color: rgb(119, 206, 251);
-  font-family: 'Source Code Pro', monospace;
   font-size: 50px;
   font-weight: 400;
   left: 50%;
@@ -13,26 +12,22 @@ const TimerWrap = styled.div`
   transform: translateX(-50%) translateY(-50%);
 `
 
-const Hundreths = styled.span`
-  font-size: 28px;
-`
+const addLeadingZero = time => (time < 10 ? `0${time}` : time)
 
-class Timer extends Component {
-  addLeadingZero(time) {
-    return time < 10 ? `0${time}` : time
-  }
-
-  render() {
-    const { hours, minutes, seconds, hundreths } = this.props
-
-    return (
-      <TimerWrap>
-        {hours > 0 && <span>{this.addLeadingZero(hours)}:</span>}
-        {this.addLeadingZero(minutes)}:{this.addLeadingZero(seconds)}
-        <Hundreths>.{hundreths}</Hundreths>
-      </TimerWrap>
-    )
-  }
+const Timer = ({ hours, minutes, seconds, hundreths }) => {
+  return (
+    <TimerWrap>
+      {hours > 0 && <span>{addLeadingZero(hours)}:</span>}
+      {addLeadingZero(minutes)}:{addLeadingZero(seconds)}
+      <span
+        css={`
+          font-size: 28px;
+        `}
+      >
+        .{hundreths}
+      </span>
+    </TimerWrap>
+  )
 }
 
 export default Timer

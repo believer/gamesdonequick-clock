@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import styled from 'styled-components'
 import ClockColumn from './ClockColumn'
 import Buttons from './Buttons'
 import Timer from './Timer'
 import Runner from './Runner'
+import { initialState, reducer } from './clockReducer'
 
 export const Wrapper = styled.div`
   border: 2px solid rgba(119, 206, 251, 0.8);
@@ -28,106 +29,68 @@ const InnerWrapper = styled.div`
   z-index: 1;
 `
 
-class Clock extends Component {
-  state = {
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    hundreths: 0,
-    running: false
-  }
+const splitTime = (time, value = 0) =>
+  time > 10 ? time.toFixed().split('')[value] : value === 0 ? 0 : time
 
-  startClock = () => {
-    this.timer = setInterval(() => {
-      this.setState(state => {
-        let { hours, minutes, seconds, hundreths } = state
+const Clock = () => {
+  const [
+    { hours, minutes, seconds, hundreths, running, runner },
+    dispatch,
+  ] = useReducer(reducer, initialState)
 
-        hundreths = state.hundreths + 1
+  const stopClock = () => dispatch({ type: 'STOP' })
+  const resetClock = () => dispatch({ type: 'RESET' })
+  const startClock = () => dispatch({ type: 'START' })
+  const updateRunner = e =>
+    dispatch({ type: 'UPDATE_RUNNER', payload: e.target.value })
 
-        if (hundreths > 9) {
-          hundreths = 0
-          seconds = seconds + 1
-        }
+  useEffect(
+    () => {
+      let timer
+      if (running) {
+        timer = setInterval(() => {
+          dispatch({ type: 'INCREMENT' })
+        }, 100)
+      } else {
+        clearInterval(timer)
+      }
 
-        if (seconds > 59) {
-          seconds = 0
-          minutes = minutes + 1
-        }
+      return () => clearInterval(timer)
+    },
+    [running]
+  )
 
-        if (minutes > 59) {
-          minutes = 0
-          hours = hours + 1
-        }
+  return (
+    <>
+      <Runner runner={runner} updateRunner={updateRunner} />
 
-        return {
-          hundreths,
-          seconds,
-          minutes,
-          hours,
-          running: true
-        }
-      })
-    }, 100)
-  }
+      <Wrapper>
+        <InnerWrapper>
+          <Timer
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+            hundreths={hundreths}
+          />
 
-  stopClock = () => {
-    clearInterval(this.timer)
+          <ClockColumn highlight={hours} />
+          <ClockColumn highlight={splitTime(minutes)} />
+          <ClockColumn highlight={splitTime(minutes, 1)} />
+          <ClockColumn highlight={splitTime(seconds)} />
+          <ClockColumn highlight={splitTime(seconds, 1)} />
+          <ClockColumn highlight={hundreths} />
+        </InnerWrapper>
+      </Wrapper>
 
-    this.setState(() => ({
-      running: false
-    }))
-  }
-
-  resetClock = () => {
-    this.stopClock()
-
-    this.setState(() => ({
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      hundreths: 0
-    }))
-  }
-
-  splitTime(time, value = 0) {
-    return time > 10 ? time.toFixed().split('')[value] : value === 0 ? 0 : time
-  }
-
-  render() {
-    const { hours, minutes, seconds, hundreths, running } = this.state
-
-    return (
-      <div>
-        <Runner />
-
-        <Wrapper>
-          <InnerWrapper>
-            <Timer
-              hours={hours}
-              minutes={minutes}
-              seconds={seconds}
-              hundreths={hundreths}
-            />
-
-            <ClockColumn highlight={hours} />
-            <ClockColumn highlight={this.splitTime(minutes)} />
-            <ClockColumn highlight={this.splitTime(minutes, 1)} />
-            <ClockColumn highlight={this.splitTime(seconds)} />
-            <ClockColumn highlight={this.splitTime(seconds, 1)} />
-            <ClockColumn highlight={hundreths} />
-          </InnerWrapper>
-        </Wrapper>
-
-        <Buttons
-          reset={this.resetClock}
-          running={running}
-          seconds={seconds}
-          start={this.startClock}
-          stop={this.stopClock}
-        />
-      </div>
-    )
-  }
+      <Buttons
+        reset={resetClock}
+        running={running}
+        seconds={seconds}
+        start={startClock}
+        stop={stopClock}
+      />
+    </>
+  )
 }
 
 export default Clock
