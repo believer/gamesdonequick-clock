@@ -106,7 +106,7 @@ const Clock = () => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          See the code GitHub
+          Code on GitHub
         </a>
       </div>
     </>
