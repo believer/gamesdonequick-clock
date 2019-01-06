@@ -7,11 +7,11 @@ During AGDQ 2018 I saw the clock using a binary counter in the background and th
 
 ## Get started
 
-Made using Create React App.
+Made using Create React App, React Hooks and [styled-components](http://styled-components.com/).
 
 ```
 $ git clone https://github.com/believer/gamesdonequick-clock.git
 $ cd gamesdonequick-clock
-$ yarn
-$ yarn start
+$ npm install
+$ npm start
 ```

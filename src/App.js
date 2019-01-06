@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import ClockColumn from './ClockColumn'
 import Buttons from './Buttons'
 import Timer from './Timer'
@@ -89,6 +89,23 @@ const Clock = () => {
         start={startClock}
         stop={stopClock}
       />
+
+      <div
+        css={`
+          margin-top: 60px;
+          text-align: center;
+        `}
+      >
+        <a
+          css={`
+            color: #fff;
+          `}
+          href="https://github.com/believer/gamesdonequick-clock"
+          target="_blank"
+        >
+          See the code GitHub
+        </a>
+      </div>
     </>
   )
 }
