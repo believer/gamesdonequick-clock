@@ -101,6 +101,7 @@ const Clock = () => {
             color: #fff;
           `}
           href="https://github.com/believer/gamesdonequick-clock"
+          rel="noopener noreferrer"
           target="_blank"
         >
           See the code GitHub
