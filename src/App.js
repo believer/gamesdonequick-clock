@@ -51,8 +51,6 @@ const Clock = () => {
         timer = setInterval(() => {
           dispatch({ type: 'INCREMENT' })
         }, 100)
-      } else {
-        clearInterval(timer)
       }
 
       return () => clearInterval(timer)
