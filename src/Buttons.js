@@ -15,7 +15,7 @@ const Buttons = ({ running, seconds, start, stop, reset }) => {
         Start clock
       </Button>
       <Button disabled={!running} onClick={stop}>
-        Stop clock
+        TIME!
       </Button>
       <Button disabled={seconds === 0} onClick={reset}>
         Reset clock
